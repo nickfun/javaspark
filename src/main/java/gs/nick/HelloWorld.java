@@ -9,6 +9,13 @@ public class HelloWorld {
 		
 		setPort(9090);
 		
+		get(new Route("/") {
+			@Override
+			public Object handle( Request req, Response res ) {
+				return "<ol><li>/hello</li><li>/json</li><li>/info</li>";
+			}
+		});
+		
 		get(new Route("/hello") {
 			@Override
 			public Object handle(Request req, Response res) {
