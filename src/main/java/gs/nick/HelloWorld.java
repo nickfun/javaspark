@@ -16,14 +16,25 @@ public class HelloWorld {
 			}
 		});
 		
-		get(new Route("/json") {
+		get( new JsonTransformerRoute("/json") {
 			@Override
 			public Object handle(Request req, Response res) {
 				MyData d = new MyData();
+				
 				d.setName("Nick");
-				d.setCar(req.session().id());
+				d.setMsg(req.session().id());
 				d.setAge(29);
+				
+				res.header("content-type", "application/json");
+				
 				return d;
+			}
+		});
+		
+		get( new JsonTransformerRoute("/info") {
+			@Override
+			public Object handle( Request req, Response res ) {
+				return req.queryMap();
 			}
 		});
 
@@ -33,7 +44,7 @@ public class HelloWorld {
 
 class MyData {
 	private String name;
-	private String car;
+	private String msg;
 	private int age;
 	public void setName(String n) {
 		name = n;
@@ -41,11 +52,11 @@ class MyData {
 	public String getName() {
 		return name;
 	}
-	public void setCar(String c) {
-		car = c;
+	public void setMsg(String c) {
+		msg = c;
 	}
-	public String getCar() {
-		return car;
+	public String getMsg() {
+		return msg;
 	}
 	public void setAge(int a) {
 		age=a;
